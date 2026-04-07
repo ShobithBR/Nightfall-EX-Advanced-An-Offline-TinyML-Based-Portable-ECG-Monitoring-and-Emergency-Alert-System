@@ -2,17 +2,7 @@
 
 Portable offline ECG monitor with TinyML arrhythmia detection, GPS tracking, and GSM emergency SMS alerts. Built on ESP32. No internet required.
 
-# Nightfall-EX Advanced: Offline TinyML-Based Portable ECG Monitoring and Emergency Alert System
-
-Nightfall-EX Advanced is a fully offline, portable cardiac emergency monitoring device built on the ESP32 microcontroller. It acquires ECG signals using the AD8232 sensor, classifies heart rhythms in real time using a lightweight TinyML model deployed directly on the microcontroller, and automatically sends an emergency SMS with live GPS coordinates via the SIM800L GSM module — no internet, no smartphone, no cloud required.
-
-> Mini Project | Department of Electronics & Communication Engineering  
-> ATME College of Engineering, Mysuru | VTU, Belagavi | AY 2025–26  
-> **Team:** Shobith B R · Sneha M  
-> **Guide:** Ms. Anupama Shetter, Assistant Professor
-
 ---
-
 
 ## 1. The Problem
 

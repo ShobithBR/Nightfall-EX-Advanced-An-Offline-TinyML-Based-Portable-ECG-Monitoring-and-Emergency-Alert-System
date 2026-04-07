@@ -2,6 +2,164 @@
 
 Portable offline ECG monitor with TinyML arrhythmia detection, GPS tracking, and GSM emergency SMS alerts. Built on ESP32. No internet required.
 
+# Nightfall-EX Advanced: Offline TinyML-Based Portable ECG Monitoring and Emergency Alert System
+
+Nightfall-EX Advanced is a fully offline, portable cardiac emergency monitoring device built on the ESP32 microcontroller. It acquires ECG signals using the AD8232 sensor, classifies heart rhythms in real time using a lightweight TinyML model deployed directly on the microcontroller, and automatically sends an emergency SMS with live GPS coordinates via the SIM800L GSM module — no internet, no smartphone, no cloud required.
+
+> Mini Project | Department of Electronics & Communication Engineering  
+> ATME College of Engineering, Mysuru | VTU, Belagavi | AY 2025–26  
+> **Team:** Shobith B R · Sneha M  
+> **Guide:** Ms. Anupama Shetter, Assistant Professor
+
+---
+
+
+## 1. The Problem
+
+Most existing ECG monitoring systems depend on smartphones, cloud servers, or stable internet connectivity to function. This makes them completely unreliable in:
+
+- Rural and remote areas where network coverage is inconsistent
+- Emergency situations where the patient is unconscious
+- Environments where smartphones or Wi-Fi infrastructure is unavailable
+
+Nightfall-EX Advanced was built specifically to fill this gap. The entire system — acquisition, analysis, and alerting — operates independently without any external dependency.
+
+---
+
+## 2. Key Features
+
+- Fully offline operation — no internet, no smartphone, no cloud at any point
+- Real-time on-device arrhythmia detection using a quantized TinyML model (Edge Impulse)
+- Trained on the **MIT-BIH Arrhythmia Database** — 93.4% classification accuracy
+- Automatic emergency SMS with embedded GPS coordinates via SIM800L cellular network
+- Average inference latency of **18–22 ms** with RAM usage consistently below 120 kB
+- Emergency SMS delivered within **8–15 seconds** after arrhythmia detection
+- Live P-Q-R-S ECG waveform visualization on a 0.96" OLED display
+- Time-stamped ECG data logging to MicroSD card for later medical review
+- Manual emergency button — single press = vitals SMS, double press = full emergency SMS
+- Dual 18650 Li-ion battery system for isolated, stable, long-duration operation
+- Compact two-layer PCB design (15cm × 10cm, 5.5cm height)
+
+---
+
+## 3. System Performance
+
+| Metric | Result |
+| :--- | :--- |
+| Overall Classification Accuracy | **93.4%** |
+| Precision (Abnormal Detection) | **92.1%** |
+| Recall (Abnormal Detection) | **91.3%** |
+| Average Inference Latency | **18–22 ms per frame** |
+| Peak RAM Usage | **< 120 kB** |
+| SMS Delivery Time | **8–15 seconds** |
+| GPS Satellite Lock Time | **10–20 seconds** |
+| GPS Positioning Accuracy | **2–5 meters outdoors** |
+
+---
+
+## 4. Hardware Components
+
+| Component | Role in System |
+| :--- | :--- |
+| **ESP32 DevKitC** | Central microcontroller — ADC sampling, EMA filtering, TinyML inference, UART control |
+| **AD8232 ECG Module** | Captures cardiac biopotential signals via 3 body electrodes (RA, LA, RL) |
+| **SIM800L GSM Module** | Sends emergency SMS alerts via cellular network — works with zero internet |
+| **NEO-7M GPS Module** | Provides real-time latitude/longitude via NMEA protocol |
+| **0.96" I2C OLED (SSD1306)** | Displays live scrolling ECG waveform, BPM, GPS status, system condition |
+| **MicroSD Card Module** | Logs time-stamped ECG readings, classifications, and alert events via SPI |
+| **18650 Li-ion Battery x2** | Battery 1 → ESP32, AD8232, OLED, MicroSD. Battery 2 → GPS, SIM800L |
+| **2200µF Electrolytic Capacitor** | Stabilizes SIM800L VCC rail during 2A SMS transmission current spikes |
+| **200kΩ + 100kΩ Resistors** | Voltage divider for battery level monitoring on GPIO35 |
+| **Tactile Push Button** | Manual SOS trigger with single and double press detection |
+| **Power Switch + LED Indicator** | Device on/off control and power status indication |
+
+---
+
+## 5. Pin Connections (ESP32 DevKitC)
+
+### AD8232 ECG Sensor
+
+| AD8232 Pin | ESP32 Pin | Description |
+| :--- | :--- | :--- |
+| VCC | 3.3V | Power from ESP32 onboard regulator |
+| GND | GND | Common ground |
+| OUTPUT | GPIO 34 | Analog ECG signal input (ADC) |
+| LO+ | GPIO 32 | Leads-off detection positive |
+| LO- | GPIO 33 | Leads-off detection negative |
+| RL | GND | Right leg drive reference |
+
+### NEO-7M GPS Module
+
+| GPS Pin | Connection | Description |
+| :--- | :--- | :--- |
+| VCC | Battery 2 (3.7V) | Direct from Battery 2 |
+| GND | GND | Common ground |
+| TX | GPIO 16 | Serial1 RX on ESP32 |
+| RX | GPIO 17 | Serial1 TX on ESP32 |
+
+### SIM800L GSM Module
+
+| GSM Pin | Connection | Description |
+| :--- | :--- | :--- |
+| VCC | Battery 2 (3.7V) | Direct from Battery 2 + 2200µF cap |
+| GND | GND | Common ground |
+| TX | GPIO 26 | Serial2 RX on ESP32 |
+| RX | GPIO 25 | Serial2 TX on ESP32 |
+
+### 0.96" OLED Display (I2C)
+
+| OLED Pin | ESP32 Pin |
+| :--- | :--- |
+| VCC | 3.3V |
+| GND | GND |
+| SDA | GPIO 21 |
+| SCL | GPIO 22 |
+
+### MicroSD Card Module (SPI)
+
+| SD Pin | ESP32 Pin |
+| :--- | :--- |
+| CS | GPIO 5 |
+| MOSI | GPIO 23 |
+| MISO | GPIO 19 |
+| SCK | GPIO 18 |
+
+### Other Connections
+
+| Component | ESP32 Pin |
+| :--- | :--- |
+| Tactile Push Button | GPIO 4 (INPUT_PULLUP) |
+| Battery ADC (200kΩ → Node A → 100kΩ → GND) | GPIO 35 |
+
+---
+
+## 6. Power Architecture
+
+The system uses two separate 18650 Li-ion batteries (3.7V each) to isolate 
+the power-hungry GSM module from the core processing unit.
+
+**Battery 1** powers the ESP32 via its VIN pin. The ESP32 onboard 3.3V 
+regulator then supplies the AD8232 ECG sensor, 0.96" OLED display, and 
+MicroSD card module.
+
+**Battery 2** directly powers the NEO-7M GPS module and the SIM800L GSM 
+module. A 2200µF electrolytic capacitor is placed across the SIM800L VCC 
+and GND pins to absorb the 2A current spike during SMS transmission and 
+prevent voltage brownout on the ESP32.
+
+```text
+Battery 1 (18650 Li-ion 3.7V)
+    ├── ESP32 VIN
+    └── ESP32 3.3V regulator
+            ├── AD8232 VCC
+            ├── OLED VCC
+            └── MicroSD VCC
+
+Battery 2 (18650 Li-ion 3.7V)
+    ├── NEO-7M GPS VCC
+    └── SIM800L VCC
+            └── 2200µF capacitor across VCC & GND
+```
 
 > This dual-battery isolation ensures that SIM800L current surges
 > during SMS transmission do not cause the ESP32 to reset or

@@ -94,7 +94,7 @@ Nightfall-EX Advanced was built specifically to fill this gap. The entire system
 | VCC | Battery 2 (3.7V) | Direct from Battery 2 + 2200µF cap |
 | GND | GND | Common ground |
 | TX | GPIO 26 | Serial2 RX on ESP32 |
-| RX | GPIO 25 | Serial2 TX on ESP32 |
+| RX | GPIO 27 | Serial2 TX on ESP32 |
 
 ### 0.96" OLED Display (I2C)
 
@@ -118,7 +118,7 @@ Nightfall-EX Advanced was built specifically to fill this gap. The entire system
 
 | Component | ESP32 Pin |
 | :--- | :--- |
-| Tactile Push Button | GPIO 4 (INPUT_PULLUP) |
+| Tactile Push Button | GPIO 12 (INPUT_PULLUP) |
 | Battery ADC (200kΩ → Node A → 100kΩ → GND) | GPIO 35 |
 
 ---

@@ -243,12 +243,16 @@ nightfall-ex-advanced/
 │   ├── architecture_flowchart.png
 │   └── device_blueprint.png
 ├── images/
-│   ├── oled_ecg_waveform.jpg
-│   ├── ecg_testing_volunteers.jpg
-│   ├── gps_coordinates_test.jpg
-│   ├── sms_alert_screenshot.jpg
-│   ├── pcb_side_view.jpg
-│   └── pcb_top_view.jpg
+│   ├── Top view of the assembled prototype.jpg
+│   ├── Side view showing stacked PCB structure.jpg
+│   ├── Emergency SMS with Location and BPM.jpg
+│   ├── Example of SMS alert received on mobile phone.jpg
+│   ├── GPS coordinates received during testing.jpg
+│   ├── ECG waveform output displayed on OLED screen
+│   ├── ECG Signal Feature Extraction
+│   ├── Model Performance & Accuracy Metrics
+│   ├── Feature Distribution & Data Explorer
+│   └── ECG Raw Data Visualization (Edge Impulse).jpg
 ├── docs/
 │   └── MINI_PROJECT_REPORT.pdf
 └── README.md

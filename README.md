@@ -16,6 +16,14 @@ Nightfall-EX Advanced was built specifically to fill this gap. The entire system
 
 ---
 
+##  Demo Video
+
+[![Nightfall Ex Demo](https://img.youtube.com/vi/ac2svg1cRTo/maxresdefault.jpg)](https://youtu.be/ac2svg1cRTo)
+
+> Click the thumbnail above to watch the full demo on YouTube.
+
+---
+
 ## 2. Key Features
 
 - Fully offline operation — no internet, no smartphone, no cloud at any point

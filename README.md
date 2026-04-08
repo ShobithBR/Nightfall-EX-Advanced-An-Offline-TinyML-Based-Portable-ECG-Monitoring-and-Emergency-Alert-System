@@ -236,6 +236,7 @@ Trained using **Edge Impulse** on the MIT-BIH Arrhythmia Database, deployed as a
 ```text
 nightfall-ex-advanced/
 ├── code/
+│   ├── Required_libraries
 │   └── nightfall_ex_advanced.ino
 ├── diagrams/
 │   ├── block_diagram.png
@@ -336,5 +337,5 @@ For the complete list of 11 referenced papers, see `docs/MINI_PROJECT_REPORT.pdf
 
 ## 16. Documentation
 
-For complete hardware methodology, TinyML training pipeline, circuit schematics, and experimental results:
-👉 [View Full Project Report (PDF)](./docs/MINI_PROJECT_REPORT.pdf)
+Complete hardware methodology, TinyML training pipeline, circuit schematics, and experimental results.
+All the required codes and prototype images and results obtained are all in the respective folders and files , you can get everything required to reproduce the project .

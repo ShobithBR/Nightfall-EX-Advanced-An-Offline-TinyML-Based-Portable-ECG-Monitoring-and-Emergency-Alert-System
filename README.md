@@ -254,7 +254,7 @@ nightfall-ex-advanced/
 │   ├── Feature Distribution & Data Explorer
 │   └── ECG Raw Data Visualization (Edge Impulse).jpg
 ├── docs/
-│   └── MINI_PROJECT_REPORT.pdf
+│   └── PROJECT_REPORT.pdf
 └── README.md
 ```
 
